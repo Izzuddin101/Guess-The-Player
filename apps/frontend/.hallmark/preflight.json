@@ -1,0 +1,9 @@
+{
+  "scannedAt": "2026-07-30",
+  "framework": "React 19 + TypeScript + Vite 7 + Tailwind CSS 4",
+  "fontStack": "Inter fallback stack, no external font package",
+  "palette": "dark navy with cyan/blue accent, hard-coded hex values",
+  "motion": "motion-cut; no animation library",
+  "spacing": "Tailwind utility spacing, no shared token scale",
+  "designSystem": null
+}

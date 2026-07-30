@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: guess-the-player-api
+    runtime: python
+    rootDir: apps/backend
+    buildCommand: uv sync --frozen --no-dev
+    startCommand: uv run --no-sync uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: RIOT_API_KEY
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: PLAYERS_CONFIG_PATH
+        value: ../../config/players.json
+
+  - type: web
+    name: guess-the-player
+    runtime: static
+    rootDir: apps/frontend
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false

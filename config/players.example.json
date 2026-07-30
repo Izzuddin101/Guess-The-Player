@@ -1,0 +1,50 @@
+[
+  {
+    "id": "player-a",
+    "displayName": "Zeyad",
+    "gameName": "Zeyad",
+    "tagLine": "EUW",
+    "platformRegion": "euw1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "player-b",
+    "displayName": "Maya",
+    "gameName": "Maya",
+    "tagLine": "EUW",
+    "platformRegion": "euw1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "player-c",
+    "displayName": "Omar",
+    "gameName": "Omar",
+    "tagLine": "EUW",
+    "platformRegion": "euw1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "player-d",
+    "displayName": "Lina",
+    "gameName": "Lina",
+    "tagLine": "EUW",
+    "platformRegion": "euw1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "player-e",
+    "displayName": "Noah",
+    "gameName": "Noah",
+    "tagLine": "EUW",
+    "platformRegion": "euw1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "player-f",
+    "displayName": "Sara",
+    "gameName": "Sara",
+    "tagLine": "EUW",
+    "platformRegion": "euw1",
+    "regionalRoute": "europe"
+  }
+]
