@@ -12,7 +12,7 @@ services:
       - key: FRONTEND_ORIGIN
         sync: false
       - key: PLAYERS_CONFIG_PATH
-        value: ../../config/players.json
+        value: ./players.json
 
   - type: web
     name: guess-the-player

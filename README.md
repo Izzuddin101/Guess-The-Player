@@ -72,8 +72,10 @@ Create a Blueprint from `render.yaml`, then set:
 - `FRONTEND_ORIGIN` on the web service to the exact static-site URL.
 - `VITE_API_BASE_URL` on the static site to the exact web-service URL.
 
-Add the real `config/players.json` before deployment. Render builds the frontend
-as a Static Site and starts the backend with Uvicorn as a Web Service.
+Keep the Render copy at `apps/backend/players.json` in sync when changing the
+local `config/players.json`. The backend service uses the copy inside its Render
+root directory. Render builds the frontend as a Static Site and starts the
+backend with Uvicorn as a Web Service.
 
 ## API
 
