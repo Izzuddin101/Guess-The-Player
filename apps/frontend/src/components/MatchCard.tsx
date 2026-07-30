@@ -63,13 +63,13 @@ export function MatchCard({ match, stage }: { match: Match; stage: number }) {
 
         <section className="loadout" aria-label="Match loadout">
           <div className="loadout__build">
-            <AssetGroup label="Final build" assets={match.items} locked={stage < 4} />
+            <AssetGroup label="Final build" assets={match.items} locked={stage < 2} />
           </div>
           <AssetGroup label="Spells" assets={match.summonerSpells} locked={stage < 3} />
           <AssetGroup
             label="Keystone"
             assets={match.mainRune ? [match.mainRune] : []}
-            locked={stage < 3}
+            locked={stage < 2}
             round
           />
         </section>

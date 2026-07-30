@@ -1,5 +1,5 @@
 /* Hallmark · genre: playful · macrostructure: Workbench · theme: Hum · anchor hue: gold · design-system: design.md · designed-as-app
- * nav: N7 scoreboard slab · footer: Ft8 rules ticker · enrichment: champion portrait cloud
+ * nav: N7 scoreboard slab · footer: Ft8 rules ticker · enrichment: interactive Matter.js bubble field
  * audience: private friend group · use: deliberate guessing · tone: playful competition
  * Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5
  * Hallmark · slop gate: 58/58 pass · contrast AA · honest chrome · tokenized · responsive · keyboard-ready
@@ -243,97 +243,168 @@ h2 {
   gap: var(--space-lg);
 }
 
-.champion-cloud {
+/* Hallmark · component: interactive bubble field · genre: playful · theme: Hum
+ * states: default · hover · focus · active · disabled · loading · error · success · selected
+ * contrast: pass
+ */
+.bubble-field {
   position: relative;
-  min-height: clamp(17rem, 58vw, 22rem);
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
   isolation: isolate;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.champion-cloud__portrait,
-.champion-cloud__mystery {
+.bubble-field[data-variant="showcase"] {
+  min-height: clamp(18rem, 58vw, 26rem);
+}
+
+.bubble-field[data-variant="choices"] {
+  height: clamp(24rem, 58vh, 31rem);
+  margin-block: var(--space-sm);
+  border-block: var(--rule-fine) solid var(--color-ink);
+  background: var(--color-paper-2);
+}
+
+.bubble-field__bubble {
   position: absolute;
-  display: grid;
-  width: clamp(4.5rem, 15vw, 7.25rem);
-  aspect-ratio: 1;
-  border: var(--rule-fine) solid var(--color-ink);
-  object-fit: cover;
-  box-shadow: var(--shadow-card);
-}
-
-.champion-cloud__portrait {
-  --portrait-angle: 0deg;
-  transform: rotate(var(--portrait-angle));
-}
-
-.champion-cloud__portrait--1 {
-  --portrait-angle: -8deg;
-  top: 4%;
-  left: 8%;
-  width: clamp(5.5rem, 18vw, 8.25rem);
-  border-radius: 44% 56% 48% 52%;
-}
-
-.champion-cloud__portrait--2 {
-  --portrait-angle: 7deg;
-  top: 0;
-  right: 12%;
-  border-radius: 50%;
-  animation: portrait-drift 4.8s ease-in-out infinite;
-}
-
-.champion-cloud__portrait--3 {
-  --portrait-angle: 5deg;
-  top: 35%;
-  left: 0;
-  border-radius: 50%;
-}
-
-.champion-cloud__portrait--4 {
-  --portrait-angle: -3deg;
-  z-index: 2;
-  top: 27%;
-  left: 35%;
-  width: clamp(6rem, 20vw, 9rem);
-  border-radius: 42% 58% 44% 56%;
-}
-
-.champion-cloud__portrait--5 {
-  --portrait-angle: 9deg;
-  top: 39%;
-  right: 0;
-  border-radius: 50%;
-  animation: portrait-drift 5.4s 800ms ease-in-out infinite;
-}
-
-.champion-cloud__portrait--6 {
-  --portrait-angle: -7deg;
-  bottom: 0;
-  left: 15%;
-  border-radius: 50%;
-}
-
-.champion-cloud__portrait--7 {
-  --portrait-angle: 4deg;
-  right: 18%;
-  bottom: 0;
-  border-radius: 46% 54% 50% 50%;
-  animation: portrait-drift 5.1s 400ms ease-in-out infinite;
-}
-
-.champion-cloud__mystery {
-  z-index: 4;
-  place-items: center;
-  top: 6%;
-  left: 46%;
-  width: clamp(3.75rem, 12vw, 5.5rem);
-  border-radius: 50%;
-  background: var(--color-accent);
+  inset: 0 auto auto 0;
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-transparent);
   color: var(--color-ink);
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 8vw, 4rem);
-  font-weight: 800;
+  cursor: grab;
+  touch-action: none;
+  will-change: transform;
+}
+
+.bubble-field__bubble:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: var(--space-3xs);
+}
+
+.bubble-field__bubble:active,
+.bubble-field__bubble[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.bubble-field__bubble:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.bubble-field__disc {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  place-items: center;
+  border: var(--rule-fine) solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background: var(--color-cyan-soft);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-card);
+  transform: scale(1);
+  transition:
+    transform var(--dur-micro) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out),
+    opacity var(--dur-short) var(--ease-out);
+}
+
+.bubble-field__bubble:nth-child(3n + 1):not([data-mystery]) .bubble-field__disc {
+  background: var(--color-paper-3);
+}
+
+.bubble-field__bubble:nth-child(3n + 2):not([data-mystery]) .bubble-field__disc {
+  background: var(--color-coral-soft);
+}
+
+.bubble-field__bubble[data-mystery="true"] {
+  z-index: var(--z-raised);
+}
+
+.bubble-field__bubble[data-mystery="true"] .bubble-field__disc {
+  background: var(--color-accent);
+  box-shadow: var(--shadow-lift);
+}
+
+.bubble-field__bubble[data-dragging="true"] {
+  z-index: calc(var(--z-raised) + 1);
+}
+
+.bubble-field__bubble:active .bubble-field__disc,
+.bubble-field__bubble[data-dragging="true"] .bubble-field__disc {
+  box-shadow: var(--shadow-lift);
+  transform: scale(0.96);
+}
+
+.bubble-field__bubble[data-state="selected"] .bubble-field__disc {
+  background: var(--color-cyan);
+  box-shadow: var(--shadow-lift);
+}
+
+.bubble-field__bubble[data-state="loading"] .bubble-field__disc {
+  background: var(--color-cyan-soft);
+  opacity: 0.78;
+}
+
+.bubble-field__bubble[data-state="error"] .bubble-field__disc {
+  background: var(--color-coral);
+}
+
+.bubble-field__bubble[data-state="success"] .bubble-field__disc {
+  background: var(--color-mint);
+}
+
+.bubble-field__disc img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  object-fit: cover;
+}
+
+.bubble-field__name {
+  width: 88%;
+  overflow: hidden;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: -0.03em;
   line-height: 1;
-  transform: rotate(6deg);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bubble-field__question {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 8vw, var(--text-3xl));
+  font-weight: 700;
+  line-height: 1;
+}
+
+.bubble-field__status {
+  position: absolute;
+  inset-block-end: var(--space-2xs);
+  inset-inline: var(--space-2xs);
+  overflow: hidden;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .squad-guide {
@@ -377,17 +448,6 @@ h2 {
 .clue-path p {
   margin: 0;
   font-weight: 700;
-}
-
-@keyframes portrait-drift {
-  0%,
-  100% {
-    transform: translateY(0) rotate(var(--portrait-angle));
-  }
-
-  50% {
-    transform: translateY(calc(var(--space-xs) * -1)) rotate(var(--portrait-angle));
-  }
 }
 
 .rules-ticker {
@@ -792,9 +852,9 @@ h2 {
 }
 
 .choice__number {
+  color: var(--color-neutral);
   font-family: var(--font-body);
   font-size: var(--text-xs);
-  color: var(--color-neutral);
 }
 
 .choice__name {
@@ -1077,6 +1137,11 @@ h2 {
     transform: rotate(-3deg);
   }
 
+  .bubble-field__bubble:hover:not(:disabled):not([data-dragging]) .bubble-field__disc {
+    box-shadow: var(--shadow-lift);
+    transform: scale(1.04);
+  }
+
   .choice:hover:not(:disabled) {
     background: var(--color-cyan-soft);
     color: var(--color-ink);
@@ -1188,7 +1253,7 @@ h2 {
     margin-inline-end: var(--space-md);
   }
 
-  .champion-cloud {
+  .bubble-field[data-variant="showcase"] {
     min-height: clamp(20rem, 31vw, 27rem);
   }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { createRound, skipRound, submitGuess } from "./api";
+import { InteractiveBubbleField } from "./components/InteractiveBubbleField";
 import { MatchCard } from "./components/MatchCard";
 import type { GuessResult, Round } from "./types";
 
@@ -13,6 +14,11 @@ const LANDING_CHAMPIONS = [
   { id: 222, name: "Jinx" },
   { id: 64, name: "Lee Sin" },
   { id: 99, name: "Lux" },
+  { id: 17, name: "Teemo" },
+  { id: 121, name: "Kha'Zix" },
+  { id: 157, name: "Yasuo" },
+  { id: 117, name: "Lulu" },
+  { id: 267, name: "Nami" },
 ];
 
 type Screen = "landing" | "game" | "results";
@@ -149,37 +155,48 @@ export default function App() {
                 <span>Clue {round.stage}/4 · {round.choices.length} friends</span>
               </div>
               <div className="answer-grid">
-              {round.choices.map((player, index) => {
-                const correct = reveal?.answer?.id === player.id;
-                const guessed = guessedIds.includes(player.id);
-                const selectedWrong = guessed && !correct;
-                const state =
-                  answerMutation.isPending && selectedId === player.id
-                    ? "loading"
-                    : correct
-                      ? "success"
-                      : selectedWrong
-                        ? "error"
-                        : undefined;
-                return (
-                  <button
-                    key={player.id}
-                    disabled={!!reveal || answerMutation.isPending || guessed}
-                    aria-pressed={selectedId === player.id}
-                    data-state={state}
-                    onClick={() => {
-                      setSelectedId(player.id);
-                      answerMutation.mutate({ playerId: player.id });
-                    }}
-                    className="choice"
-                  >
-                    <span className="choice__number">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="choice__name">{player.displayName}</span>
-                    {correct && <span className="choice__status" aria-label="Correct answer">✓ CORRECT</span>}
-                    {selectedWrong && <span className="choice__status" aria-label="Wrong answer">× GUESSED</span>}
-                  </button>
-                );
-              })}
+                {round.choices.map((player, index) => {
+                  const correct = reveal?.answer?.id === player.id;
+                  const guessed = guessedIds.includes(player.id);
+                  const selectedWrong = guessed && !correct;
+                  const state =
+                    answerMutation.isPending && selectedId === player.id
+                      ? "loading"
+                      : correct
+                        ? "success"
+                        : selectedWrong
+                          ? "error"
+                          : undefined;
+
+                  return (
+                    <button
+                      key={player.id}
+                      disabled={!!reveal || answerMutation.isPending || guessed}
+                      aria-pressed={selectedId === player.id}
+                      data-state={state}
+                      onClick={() => {
+                        setSelectedId(player.id);
+                        answerMutation.mutate({ playerId: player.id });
+                      }}
+                      className="choice"
+                    >
+                      <span className="choice__number">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="choice__name">{player.displayName}</span>
+                      {correct && (
+                        <span className="choice__status" aria-label="Correct answer">
+                          ✓ CORRECT
+                        </span>
+                      )}
+                      {selectedWrong && (
+                        <span className="choice__status" aria-label="Wrong answer">
+                          × GUESSED
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
 
             {!reveal ? (
@@ -232,6 +249,8 @@ export default function App() {
 }
 
 function Landing({ onStart }: { onStart: () => void }) {
+  const [selectedChampion, setSelectedChampion] = useState<string | null>(null);
+
   return (
     <Shell>
       <main className="landing">
@@ -252,19 +271,19 @@ function Landing({ onStart }: { onStart: () => void }) {
         </section>
 
         <aside className="squad-showcase reveal-in" aria-label="How the game works">
-          <div className="champion-cloud" aria-hidden="true">
-            {LANDING_CHAMPIONS.map((champion, index) => (
-              <img
-                key={champion.id}
-                className={`champion-cloud__portrait champion-cloud__portrait--${index + 1}`}
-                src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${champion.id}.png`}
-                alt=""
-                width="128"
-                height="128"
-              />
-            ))}
-            <span className="champion-cloud__mystery">?</span>
-          </div>
+          <InteractiveBubbleField
+            ariaLabel="Interactive League champion bubbles"
+            variant="showcase"
+            items={LANDING_CHAMPIONS.map((champion) => ({
+              id: String(champion.id),
+              label: champion.name,
+              imageUrl: `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${champion.id}.png`,
+            }))}
+            mystery={{ label: "Unknown champion" }}
+            selectedId={selectedChampion}
+            gravityScale={0.0008}
+            onSelect={setSelectedChampion}
+          />
 
           <div className="squad-guide">
             <div>
@@ -273,9 +292,9 @@ function Landing({ onStart }: { onStart: () => void }) {
             </div>
             <ol className="clue-path">
               <li><span>01</span><p>Result · time · KDA</p></li>
-              <li><span>02</span><p>CS · vision</p></li>
-              <li><span>03</span><p>Spells · keystone</p></li>
-              <li><span>04</span><p>Build · champion</p></li>
+              <li><span>02</span><p>Build · keystone</p></li>
+              <li><span>03</span><p>CS · vision · spells</p></li>
+              <li><span>04</span><p>Queue · champion</p></li>
             </ol>
           </div>
         </aside>

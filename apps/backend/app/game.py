@@ -25,12 +25,12 @@ def reveal_match(match: PublicMatch, stage: int) -> RevealedMatch:
         deaths=match.deaths,
         assists=match.assists,
         kda=match.kda,
-        creep_score=match.creep_score if stage >= 2 else None,
-        vision_score=match.vision_score if stage >= 2 else None,
+        creep_score=match.creep_score if stage >= 3 else None,
+        vision_score=match.vision_score if stage >= 3 else None,
         duration_seconds=match.duration_seconds,
-        items=match.items if stage >= 4 else [],
+        items=match.items if stage >= 2 else [],
         summoner_spells=match.summoner_spells if stage >= 3 else [],
-        main_rune=match.main_rune if stage >= 3 else None,
+        main_rune=match.main_rune if stage >= 2 else None,
     )
 
 

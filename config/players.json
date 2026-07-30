@@ -1,0 +1,58 @@
+[
+  {
+    "id": "neudox",
+    "displayName": "Neudox",
+    "gameName": "Neudox",
+    "tagLine": "EUNE",
+    "platformRegion": "eun1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "phvoundves",
+    "displayName": "Phvoundves",
+    "gameName": "Phvoundves",
+    "tagLine": "EUNE",
+    "platformRegion": "eun1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "joshua-graham",
+    "displayName": "Joshua Graham",
+    "gameName": "Joshua Graham",
+    "tagLine": "DND",
+    "platformRegion": "eun1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "mehr17",
+    "displayName": "MehR17",
+    "gameName": "MehR17",
+    "tagLine": "EUNE",
+    "platformRegion": "eun1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "blancs",
+    "displayName": "BlancS",
+    "gameName": "BlancS",
+    "tagLine": "69420",
+    "platformRegion": "eun1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "nutsaco",
+    "displayName": "NutSaco",
+    "gameName": "NutSaco",
+    "tagLine": "EUNE",
+    "platformRegion": "eun1",
+    "regionalRoute": "europe"
+  },
+  {
+    "id": "bardgod",
+    "displayName": "BardGod",
+    "gameName": "BardGod",
+    "tagLine": "5626",
+    "platformRegion": "eun1",
+    "regionalRoute": "europe"
+  }
+]
